@@ -37,9 +37,6 @@
   box-shadow: none;
 }
 
-
-
-
 /* this colors the input box text and x  of multi dropdown*/
 .Select--multi .Select-value {
   color: white;
@@ -48,4 +45,9 @@
 /* customize the table background colour when hovering on rows*/
 tr:hover {
   background-color: rgb(41, 56, 55) !important;
+}
+
+/* Set font for the whole app with universal CSS selector (*)*/
+*{
+  font-family: Arial;
 }
