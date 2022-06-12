@@ -1,2 +1,2 @@
 # Dash-dashboard-demo
-Dash dashboard showing analyses of order value and frequency. Deployed on Heroku.
+Dashboard demonstrating analysis of order value and frequency data. Created with Dash and Bootsrap. Deployed app: https://order-value-dashboard.herokuapp.com/.
