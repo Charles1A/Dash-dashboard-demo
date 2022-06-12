@@ -1,7 +1,3 @@
-# Note: Directory containing app:
-# /Users/cea/Desktop/Data Analysis and Machine Learning/Python/Dash-dashboard/
-# python3 Dash-Sales-app.py
-
 ############################################################
 
 # # Import statements
@@ -25,9 +21,7 @@ app = dash.Dash(__name__,
     title='Customer Spend Analysis'
     )
 
-df = pd.read_csv(
-    "/Users/cea/Desktop/Data Analysis and Machine Learning/Python/Dash-dashboard/data/sales_data.csv", sep=','
-)
+df = pd.read_csv("data/sales_data.csv", sep=',')
 
 # # Boxplot of average order values, aggregated by numbers of orders per customer # #
 
@@ -36,7 +30,7 @@ box_fig = px.box(data_frame = df,
                x = 'Historic Number Of Orders',
                 template="plotly_dark",
                 color_discrete_sequence=['#0488c2']
-                # color='Historic Number Of Orders', # Display bars in multiple colors
+                # color='Historic Number Of Orders', # Display bars in multiple colors instead of one color
                 )
 
 box_fig.update_xaxes(dtick=1, title_text='Hist No. Of Orders')
@@ -77,7 +71,6 @@ active_histord_r = pearsonr(df['Historic Number Of Orders'], df['days active'])
 scat1 = px.scatter(data_frame = df,
                      y = 'days active',
                      x = 'Historic Number Of Orders',
-                     # width=200, height=200,
                      template="plotly_dark",
                      trendline="ols",
                     trendline_color_override="#76b5c5",
