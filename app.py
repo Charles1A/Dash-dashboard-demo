@@ -383,5 +383,6 @@ def select_figure(value):
     elif value == "Lifetime Value vs No. Orders":
         return dcc.Graph(figure=scat3, id='graph', style={"height": "60vh"})  
 
-if __name__ == "__main__":
-    app.run_server(debug=True)
+# if __name__ == "__main__":
+#     app.run_server(debug=True)
+server = app.server
