@@ -18,7 +18,7 @@ from scipy.stats import pearsonr
 app = dash.Dash(__name__,
     meta_tags=[{'name': 'viewport',
     'content': 'width=device-width, initial-scale=1.0'}], 
-    title='Customer Spend Analysis'
+    title='Sales Data Analysis'
     )
 
 df = pd.read_csv("data/sales_data.csv", sep=',')
@@ -307,7 +307,7 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col([
-            html.H1("Order Value & Frequency Analysis", 
+            html.H1("Sales Data Analysis", 
                 className="text-center",
                  style={'color': '#e8e9ea', 'margin-top' : '1%', 'margin-bottom' : '2%'}),
                 ], width=10),
