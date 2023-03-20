@@ -17,7 +17,7 @@ MarkupSafe==2.0.1
 multitasking==0.0.10
 numpy
 packaging==21.3
-pandas==1.4.2
+pandas==
 patsy==0.5.2
 plotly==5.5.0
 pyparsing==3.0.8
