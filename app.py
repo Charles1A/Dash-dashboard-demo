@@ -20,6 +20,7 @@ app = dash.Dash(__name__,
     'content': 'width=device-width, initial-scale=1.0'}], 
     title='Sales Data Analysis'
     )
+server = app.server
 
 df = pd.read_csv("data/sales_data.csv", sep=',')
 
