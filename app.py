@@ -18,11 +18,14 @@ from scipy.stats import pearsonr
 app = dash.Dash(__name__,
     meta_tags=[{'name': 'viewport',
     'content': 'width=device-width, initial-scale=1.0'}], 
-    title='Sales Data Analysis'
+    title='Customer Spend Analysis'
     )
+
 server = app.server
 
-df = pd.read_csv("data/sales_data.csv", sep=',')
+df = pd.read_csv(
+    "/Users/cea/Desktop/Data Analysis and Machine Learning/Python/Dash-dashboard/data/sales_data.csv", sep=','
+)
 
 # # Boxplot of average order values, aggregated by numbers of orders per customer # #
 
@@ -31,7 +34,7 @@ box_fig = px.box(data_frame = df,
                x = 'Historic Number Of Orders',
                 template="plotly_dark",
                 color_discrete_sequence=['#0488c2']
-                # color='Historic Number Of Orders', # Display bars in multiple colors instead of one color
+                # color='Historic Number Of Orders', # Display bars in multiple colors
                 )
 
 box_fig.update_xaxes(dtick=1, title_text='Hist No. Of Orders')
@@ -72,6 +75,7 @@ active_histord_r = pearsonr(df['Historic Number Of Orders'], df['days active'])
 scat1 = px.scatter(data_frame = df,
                      y = 'days active',
                      x = 'Historic Number Of Orders',
+                     # width=200, height=200,
                      template="plotly_dark",
                      trendline="ols",
                     trendline_color_override="#76b5c5",
@@ -90,7 +94,6 @@ scat1.update_layout(
         'x':0.5,
         'xanchor': 'center',
         'yanchor': 'top'})
-
 scat1.update_layout({
 'plot_bgcolor': 'rgba(0, 0, 0, 0)',
 'paper_bgcolor': 'rgba(0, 0, 0, 0)',
@@ -121,7 +124,6 @@ scat2.update_layout(
         'x':0.5,
         'xanchor': 'center',
         'yanchor': 'top'})
-
 scat2.update_layout({
 'plot_bgcolor': 'rgba(0, 0, 0, 0)',
 'paper_bgcolor': 'rgba(0, 0, 0, 0)',
@@ -134,8 +136,6 @@ histord_histval_r = pearsonr(df['Historic Number Of Orders'], df['Historic Custo
 scat3 = px.scatter(data_frame = df,
                      y = 'Historic Customer Lifetime Value',
                      x = 'Historic Number Of Orders',
-                    title=f'Pearson\'s R: {histord_histval_r[0]:.2f}',
-                     
                      template="plotly_dark",
                      trendline="ols",
                     trendline_color_override="#76b5c5",
@@ -154,7 +154,6 @@ scat3.update_layout(
         )
 
 scat3.update_layout(margin_r=0, margin_l=0, font_size=10)
-
 scat3.update_layout({
 'plot_bgcolor': 'rgba(0, 0, 0, 0)',
 'paper_bgcolor': 'rgba(0, 0, 0, 0)',
@@ -272,14 +271,14 @@ table = dash_table.DataTable(df_order_val.to_dict('records'),
         'backgroundColor': 'rgba(0, 0, 0, 0)',
         'color': 'white',
         'text-align': 'left',
-        'font-family': 'arial',
+        # 'font-family': 'arial',
         'font-size': '12px',
     },
 
     style_data={
         'backgroundColor': 'rgba(0, 0, 0, 0)',
         'color': 'white',
-        'font-family': 'arial',
+        # 'font-family': 'arial',
         'font-size': '12px',
     },
 
@@ -308,7 +307,7 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col([
-            html.H1("Sales Data Analysis", 
+            html.H1("Order Value & Frequency Analysis", 
                 className="text-center",
                  style={'color': '#e8e9ea', 'margin-top' : '1%', 'margin-bottom' : '2%'}),
                 ], width=10),
@@ -317,7 +316,7 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col(
-            html.H6(f"Total Customers : {df.shape[0]} (as of {today})", 
+            html.H6(f"As of {today}: Total Customers = {df.shape[0]} . Total orders = {df['Historic Number Of Orders'].sum().astype(int)}", 
                 className="text-center",
                   style={'color': '#e8e9ea', 'padding-top' : '1%', 'padding-bottom' : '1%',
                   'backgroundColor':'#253748',
@@ -328,18 +327,15 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col([
-            html.H6('Avg Order Value Ranges', 
-                className="text-center",
-                style={'color': '#e8e9ea'},),
-            dcc.Graph(figure=box_fig, style={"height": "40vh"}),
+            dcc.Graph(figure=box_fig, style={"height": "35vh"}),
             html.Br(),
-            dcc.Graph(figure=hist, style={"height": "22vh", 'margin-top' : '3%'}, 
+            dcc.Graph(figure=hist, style={"height": "30vh", 'margin-top' : '3%'}, 
                 className="d-flex flex-wrap align-content-end"),
 
                 ], width={"size": 4}, className="p-4"),
 
         dbc.Col([
-            html.H6('Avg Order Value Data', 
+            html.H6('Aggregate Data', 
                 className="text-center",
                 style={'color': '#e8e9ea'}
                 ),
@@ -347,7 +343,7 @@ app.layout = dbc.Container([
                 ], width=4, className="p-4"),
 
         dbc.Col([
-            html.H6('Select Scatter Plot with Correlation', 
+            html.H6('Select Scatter Plot', 
                 className="text-center",
                 style={'color': '#e8e9ea', 'margin-bottom' : '2%'}),
             html.Div(
@@ -382,7 +378,7 @@ def select_figure(value):
         return dcc.Graph(figure=scat2, id='graph', style={"height": "60vh"})
 
     elif value == "Lifetime Value vs No. Orders":
-        return dcc.Graph(figure=scat3, id='graph', style={"height": "60vh"})  
+        return dcc.Graph(figure=scat3, id='graph', style={"height": "60vh"})
 
 # if __name__ == "__main__":
 #     app.run_server(debug=True)
