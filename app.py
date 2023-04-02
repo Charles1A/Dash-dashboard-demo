@@ -1,3 +1,7 @@
+# Note: Directory containing app:
+# /Users/cea/Desktop/Data Analysis and Machine Learning/Python/Dash-dashboard/
+# python3 app.py
+
 ############################################################
 
 # # Import statements
@@ -18,12 +22,12 @@ from scipy.stats import pearsonr
 app = dash.Dash(__name__,
     meta_tags=[{'name': 'viewport',
     'content': 'width=device-width, initial-scale=1.0'}], 
-    title='Customer Spend Analysis'
+    title='Sales Data Analysis'
     )
 
-server = app.server
-
-df = pd.read_csv("data/sales_data.csv", sep=',')
+df = pd.read_csv(
+    "/Users/cea/Desktop/Data Analysis and Machine Learning/Python/Dash-dashboard/data/sales_data.csv", sep=','
+)
 
 # # Boxplot of average order values, aggregated by numbers of orders per customer # #
 
@@ -36,7 +40,7 @@ box_fig = px.box(data_frame = df,
                 )
 
 box_fig.update_xaxes(dtick=1, title_text='Hist No. Of Orders')
-box_fig.update_yaxes(tickprefix="$")
+box_fig.update_yaxes(tickprefix="$", title_text='Avg Order Val per Cust')
 box_fig.layout.update(showlegend=False) 
 box_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10)
 
@@ -112,7 +116,7 @@ scat2 = px.scatter(data_frame = df,
                     opacity=0.7)
 
 scat2.update_xaxes(title_text='Days Active')
-scat2.update_yaxes(tickprefix="$", title_text='Hist Cx Lifetime Value')
+scat2.update_yaxes(tickprefix="$", title_text='Hist Cust Lifetime Val')
 
 scat2.update_layout(margin_r=0, margin_l=0, font_size=10)
 
@@ -141,7 +145,7 @@ scat3 = px.scatter(data_frame = df,
                     opacity=0.7)
 
 scat3.update_xaxes(title_text='Hist No. Of Orders')
-scat3.update_yaxes(tickprefix="$", title_text='Hist Cx Lifetime Value')
+scat3.update_yaxes(tickprefix="$", title_text='Hist Cust Lifetime Val')
 
 scat3.update_layout(
     title={
@@ -305,7 +309,7 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col([
-            html.H1("Order Value & Frequency Analysis", 
+            html.H1("Sales Data Analysis", 
                 className="text-center",
                  style={'color': '#e8e9ea', 'margin-top' : '1%', 'margin-bottom' : '2%'}),
                 ], width=10),
@@ -314,7 +318,7 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col(
-            html.H6(f"As of {today}: Total Customers = {df.shape[0]} . Total orders = {df['Historic Number Of Orders'].sum().astype(int)}", 
+            html.H6(f"As of {today} ◼ Total Customers = {df.shape[0]} ◼︎ Total orders = {df['Historic Number Of Orders'].sum().astype(int)}", 
                 className="text-center",
                   style={'color': '#e8e9ea', 'padding-top' : '1%', 'padding-bottom' : '1%',
                   'backgroundColor':'#253748',
@@ -325,10 +329,10 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col([
-            dcc.Graph(figure=box_fig, style={"height": "35vh"}),
-            html.Br(),
             dcc.Graph(figure=hist, style={"height": "30vh", 'margin-top' : '3%'}, 
                 className="d-flex flex-wrap align-content-end"),
+            html.Br(),
+            dcc.Graph(figure=box_fig, style={"height": "35vh"}),
 
                 ], width={"size": 4}, className="p-4"),
 
@@ -376,8 +380,7 @@ def select_figure(value):
         return dcc.Graph(figure=scat2, id='graph', style={"height": "60vh"})
 
     elif value == "Lifetime Value vs No. Orders":
-        return dcc.Graph(figure=scat3, id='graph', style={"height": "60vh"})
+        return dcc.Graph(figure=scat3, id='graph', style={"height": "60vh"})  
 
-# if __name__ == "__main__":
-#     app.run_server(debug=True)
-
+if __name__ == "__main__":
+    app.run_server(debug=True)
