@@ -26,7 +26,7 @@ app = dash.Dash(__name__,
     )
 
 df = pd.read_csv(
-    "/sales_data.csv", sep=','
+    "data/sales_data.csv", sep=','
 )
 
 # # Boxplot of average order values, aggregated by numbers of orders per customer # #
