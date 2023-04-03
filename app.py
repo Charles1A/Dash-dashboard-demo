@@ -25,6 +25,8 @@ app = dash.Dash(__name__,
     title='Sales Data Analysis'
     )
 
+server = app.server
+
 df = pd.read_csv(
     "data/sales_data.csv", sep=','
 )
