@@ -223,7 +223,7 @@ table = dash_table.DataTable(df_order_val.to_dict('records'),
          'width': '18%'},
 
         {'if': {'column_id': 'max'},
-         'width': '18%'},
+         'width': '18%', 'padding-right': '10px',},
 
         {'if': {'column_id': 'Historic Number Of Orders'},
          'width': '20%'},
