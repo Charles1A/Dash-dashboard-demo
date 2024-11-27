@@ -41,7 +41,7 @@ box_fig = px.box(data_frame = df,
                 # color='Historic Number Of Orders', # Display bars in multiple colors
                 )
 
-box_fig.update_xaxes(dtick=1, title_text='Hist No. Of Orders')
+box_fig.update_xaxes(dtick=1, title_text='Hist No. Of Orders per Cust')
 box_fig.update_yaxes(tickprefix="$", title_text='Avg Order Val per Cust')
 box_fig.layout.update(showlegend=False) 
 box_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10)
@@ -58,7 +58,7 @@ hist = px.histogram(df,
                    histnorm='percent',
                    opacity=0.6, color_discrete_sequence=['#0488c2'])
 
-hist.update_xaxes(tickprefix='$')
+hist.update_xaxes(tickprefix='$', title_text='Avg Order Val per Cust')
 hist.update_yaxes(ticksuffix='%', title_text='Pct of Customers')
 hist.update_layout(margin_r=0, margin_l=0, 
     margin_t=0, margin_b=0, 
@@ -87,8 +87,8 @@ scat1 = px.scatter(data_frame = df,
                     opacity=0.7
                     )
 
-scat1.update_xaxes(title_text='Hist No. Of Orders')
-scat1.update_yaxes(title_text='Days Active')
+scat1.update_xaxes(title_text='Hist No. Of Orders per Cust')
+scat1.update_yaxes(title_text='Cust Days Active')
 
 scat1.update_layout(margin_r=0, margin_l=0, font_size=10)
 
@@ -117,7 +117,7 @@ scat2 = px.scatter(data_frame = df,
                     color_discrete_sequence=['#0488c2'],
                     opacity=0.7)
 
-scat2.update_xaxes(title_text='Days Active')
+scat2.update_xaxes(title_text='Cust Days Active')
 scat2.update_yaxes(tickprefix="$", title_text='Hist Cust Lifetime Val')
 
 scat2.update_layout(margin_r=0, margin_l=0, font_size=10)
@@ -146,7 +146,7 @@ scat3 = px.scatter(data_frame = df,
                     color_discrete_sequence=['#0488c2'],
                     opacity=0.7)
 
-scat3.update_xaxes(title_text='Hist No. Of Orders')
+scat3.update_xaxes(title_text='Hist No. Of Orders per Cust')
 scat3.update_yaxes(tickprefix="$", title_text='Hist Cust Lifetime Val')
 
 scat3.update_layout(
