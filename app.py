@@ -33,7 +33,7 @@ df = pd.read_csv(
 
 # # Boxplot of average order values, aggregated by numbers of orders per customer # #
 
-box_fig = px.box(data_frame = df,
+box_fig = px.bar(data_frame = df,
                y = 'Average Order Value',
                x = 'Historic Number Of Orders',
                 template="plotly_dark",
