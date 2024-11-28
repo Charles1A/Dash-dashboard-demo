@@ -1,7 +1,7 @@
 /* input box */
 .Select-control {
     background-color: black;
- height: 27px;
+ height: 22px;
 }
 
 
@@ -31,11 +31,11 @@
 
 /* set the height a dash Dropdown */
 .Select-input{
-    height: 25px;
+    height: 20px;
 }
 
 .Select-placeholder{
-    line-height: 25px;
+    line-height: 20px;
 }
 
 /* border on focus - default is blue
