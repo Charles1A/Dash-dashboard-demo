@@ -350,7 +350,7 @@ app.layout = dbc.Container([
             dcc.Graph(figure=hist, style={"height": "30vh", 'margin-top' : '3%'}, 
                 className="d-flex flex-wrap align-content-end"),
             html.Br(),
-            dcc.Graph(figure=box_fig, style={"height": "35vh"}),
+            dcc.Graph(figure=range_fig, style={"height": "35vh"}),
 
                 ], width={"size": 4}, className="p-4"),
 
