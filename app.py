@@ -53,7 +53,7 @@ range_fig.add_trace(go.Bar(x=df_order_val['Historic Number Of Orders'],
 ))
 
 range_fig.update_xaxes(title_text="Historic No. of Orders", dtick=1)
-range_fig.update_yaxes(title_text="Avg Order Value", tickprefix="$")
+range_fig.update_yaxes(title_text="Avg Order Value Range", tickprefix="$")
 
 # box_fig.layout.update(showlegend=False)
 range_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10,
