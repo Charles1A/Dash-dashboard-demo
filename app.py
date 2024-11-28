@@ -350,7 +350,7 @@ app.layout = dbc.Container([
                 ], width={"size": 4}, className="p-4"),
 
         dbc.Col([
-            html.H6('Aggregate Data', 
+            html.H6('Avg Order Value Data', 
                 className="text-center",
                 style={'color': '#e8e9ea'}
                 ),
