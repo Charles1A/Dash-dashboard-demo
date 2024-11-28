@@ -22,7 +22,7 @@ from scipy.stats import pearsonr
 app = dash.Dash(__name__,
     meta_tags=[{'name': 'viewport',
     'content': 'width=device-width, initial-scale=1.0'}], 
-    title='Sales Data Analysis'
+    title='E-Commerce Data Analysis'
     )
 
 server = app.server
@@ -31,26 +31,43 @@ df = pd.read_csv(
     "data/sales_data.csv", sep=','
 )
 
-# # Boxplot of average order values, aggregated by numbers of orders per customer # #
+# Dataframe that aggregates data by Historic Number Of Orders
+df_order_val = df.groupby('Historic Number Of Orders')['Average Order Value'].agg(['median', 'min', 'max', 'count']).reset_index()
 
-box_fig = px.bar(data_frame = df,
-               y = 'Average Order Value',
-               x = 'Historic Number Of Orders',
-                template="plotly_dark",
-                color_discrete_sequence=['#0488c2']
-                # color='Historic Number Of Orders', # Display bars in multiple colors
-                )
+# Order value ranges:
+df_order_val['range'] = df_order_val['max'] - df_order_val['min']
 
-box_fig.update_xaxes(dtick=1, title_text='Hist No. Of Orders per Cust')
-box_fig.update_yaxes(tickprefix="$", title_text='Avg Order Val per Cust')
-box_fig.layout.update(showlegend=False) 
-box_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10)
+# # --- # Bar chart showing the order value ranges, aggregated by numbers of orders per customer #
 
-box_fig.update_layout({
+range_fig = go.Figure()
+range_fig.add_trace(go.Bar(x=df_order_val['Historic Number Of Orders'], 
+                     y=df_order_val['range'],
+                     orientation='v',
+                base=min_val_list,
+                marker_color='#0488c2',
+                marker_line_color='rgb(8,48,107)',
+                marker_line_width=1.5,
+                opacity=0.6,
+                customdata=df_order_val[['min','max', 'median']],
+                hovertemplate=
+                "<b>Min: $%{customdata[0]}</b><br>" +
+                "<b>Max: $%{customdata[1]}</b><br>" +
+                "Median: $%{customdata[2]:,.0f}" +
+                "<extra></extra>",
+))
+
+range_fig.update_xaxes(title_text="Cumulative Orders per Cust", dtick=1)
+range_fig.update_yaxes(title_text="Avg Order Values", tickprefix="$")
+
+# box_fig.layout.update(showlegend=False)
+range_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10)
+
+range_fig.update_layout({
 'plot_bgcolor': 'rgba(0, 0, 0, 0)',
 'paper_bgcolor': 'rgba(0, 0, 0, 0)',
 })
 
+# # --- # Histogram showing the percentage of customers versus avg order value
 hist = px.histogram(df, 
                    x = 'Average Order Value',
                    title='', 
@@ -163,14 +180,11 @@ scat3.update_layout({
 'paper_bgcolor': 'rgba(0, 0, 0, 0)',
 })
 
-# # Pandas data frame:
-
-df_order_val = df.groupby('Historic Number Of Orders')['Average Order Value'].agg(['median', 'min', 'max', 'count']).reset_index()
+# # Compute percent of customers versus cumulative order number
 
 df_order_val['pct_of_total'] = df_order_val['count']/df_order_val['count'].sum()
 
-# Note: the following 'data_bars' code for 
-# conditional formatting of Dash data table
+# The following code for conditional formatting of Dash data table
 # is from 'Displaying data bars' vignette on plotly.com
 
 def data_bars(df, column):
@@ -311,7 +325,7 @@ app.layout = dbc.Container([
     dbc.Row([
 
         dbc.Col([
-            html.H1("Sales Data Analysis", 
+            html.H1("E-commerce Data Analysis", 
                 className="text-center",
                  style={'color': '#e8e9ea', 'margin-top' : '1%', 'margin-bottom' : '2%'}),
                 ], width=10),
@@ -347,7 +361,7 @@ app.layout = dbc.Container([
                 ], width=4, className="p-4"),
 
         dbc.Col([
-            html.H6('Select Scatter Plot', 
+            html.H6('Correlation Studies', 
                 className="text-center",
                 style={'color': '#e8e9ea', 'margin-bottom' : '2%'}),
             html.Div(
