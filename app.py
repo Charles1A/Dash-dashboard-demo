@@ -47,7 +47,7 @@ range_fig.add_trace(go.Bar(x=df_order_val['Historic Number Of Orders'],
                      orientation='v',
                 base=df_order_val['min'],
                 marker_color='#0488c2',
-                marker_line_color='rgb(8,48,107)',
+                marker_line_color='#76b5c5',
                 marker_line_width=1.5,
                 opacity=0.6,
                 customdata=df_order_val[['min','max', 'median']],
@@ -62,7 +62,8 @@ range_fig.update_xaxes(title_text="Cumulative Orders per Cust", dtick=1)
 range_fig.update_yaxes(title_text="Avg Order Values", tickprefix="$")
 
 # box_fig.layout.update(showlegend=False)
-range_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10)
+range_fig.update_layout(margin_r=0, margin_l=0, margin_t=0, margin_b=0, font_size=10,
+                       template="plotly_dark")
 
 range_fig.update_layout({
 'plot_bgcolor': 'rgba(0, 0, 0, 0)',
